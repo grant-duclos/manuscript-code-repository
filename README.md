@@ -7,6 +7,13 @@ This repository contains code from peer-reviewed publications.
 
 ***
 
+* [Analysis Part 1](https://www.google.com)
+* [Analysis Part 2](https://www.google.com)
+
+The analysis file(s) require user-written Stata \*.ado files.  A library of the \*.ado files is available for download at [my-code](https://www.google.com).    
+
+***
+
 ```R
 
 cat("This is new", "\n")
