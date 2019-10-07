@@ -7,15 +7,9 @@ This repository contains code from peer-reviewed publications.
 
 ***
 
-* [Analysis Part 1](https://www.google.com)
-* [Analysis Part 2](https://www.google.com)
+* [Dataset](https://www.google.com)
+* [Analysis](https://github.com/grant-duclos/manuscript-code-repository/blob/master/code/2019-Science-Advances/Analysis.R)
 
-The analysis file(s) require user-written Stata \*.ado files.  A library of the \*.ado files is available for download at [my-code](https://www.google.com).    
+Apply the "Analysis" R script to the pre-filtered "Dataset" to reproduce core analysis in the publication.    
 
 ***
-
-```R
-
-cat("This is new", "\n")
-
-```
