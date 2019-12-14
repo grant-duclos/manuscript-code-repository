@@ -1,15 +1,23 @@
 # load necessary packages
-suppressPackageStartupMessages(lapply(c("Biobase", "topicmodels", "MASS", "lsa"), library, character.only = TRUE))
+suppressPackageStartupMessages(lapply(c("topicmodels", "MASS", "lsa"), library, character.only = TRUE))
 
-# counts.mat: counts matrix
-# type: "gene" or "cells" for gene set or cell cluster identification
-# n.states: number of gene sets or cell clusters
-# n.starts: number of random starts for LDA
-# seed: seed for random number generation used during LDA
-# max.q: maximum FDR corrected p-value (< 0.05 is recommended)
-# min.coef: minimum regression coefficient (> 1 is recommended)
-# min.spec: minimum state specificity (value between 0 and 1)
-# min.sim: minimum state similaririty (value between 0 and 1)
+#' A function to reproduce the core statistical analysis in the publication using the available pre-filtered dataset
+#'
+#' Assign genes to gene_sets and cells to clusters using LDA
+#' @param counts.mat A counts matrix: columns are cells, rows are genes
+#' @param type Specify "genes" or "cells" for gene set or cell cluster identification
+#' @param n.states number of gene sets or cell clusters
+#' @param n.starts number of random starts for LDA
+#' @param seed seed for random number generation used during LDA
+#' @param max.q maximum FDR corrected p-value (< 0.05 is recommended)
+#' @param min.coef minimum regression coefficient (> 1 is recommended)
+#' @param min.spec minimum state specificity (value between 0 and 1)
+#' @param min.sim minimum state similaririty (value between 0 and 1)
+#' @return A matrix containing p-value, FDR q, regression coefficient, state specificity, state similarity, and assignment (gene.set or cluster) for each LDA state
+#' @export
+#' @examples
+#' result.gene.sets <- run_analysis(counts.mat = counts.mat, type = "genes", n.states = 19, n.starts = 5, seed = 12345, max.q = 0.00001, min.coef = 1, min.spec = 0.1, min.sim = 0.4)
+#' result.clusters <- run_analysis(counts.mat = counts.mat, type = "cells", n.states = 13, n.starts = 5, seed = 12345, max.q = 0.05, min.coef = 1, min.spec = 0.1, min.sim = 0)
 
 run_analysis <- function(
 	counts.mat = counts.mat,
@@ -21,7 +29,7 @@ run_analysis <- function(
 	min.coef = 1,
 	min.spec = 0.1,
 	min.sim = 0) {
-
+	
 	# Assign seeds for LDA
 	seeds <- seed + 0:(n.starts - 1)
 
@@ -144,32 +152,3 @@ run_analysis <- function(
 	#
 	return(result.stats)
 }
-
-
-
-# Gene Set analysis
-result.gene.sets <- run_analysis(
-	counts.mat = counts.mat,
-	type = "genes",
-	n.states = 19,
-	n.starts = 5,
-	seed = 12345,
-	max.q = 0.00001,
-	min.coef = 1,
-	min.spec = 0.1,
-	min.sim = 0.4)
-
-
-
-# Cell Cluster analysis
-result.clusters <- run_analysis(
-	counts.mat = counts.mat,
-	type = "cells",
-	n.states = 13,
-	n.starts = 5,
-	seed = 12345,
-	max.q = 0.05,
-	min.coef = 1,
-	min.spec = 0.1,
-	min.sim = 0)
-
